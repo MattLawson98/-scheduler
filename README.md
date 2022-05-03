@@ -31,10 +31,12 @@ npm test
 npm run storybook
 ```
 ### Dependencies
-axios
-classnames
-normalize.css
-prop-types
-react 
-react-dom
-react-scripts 
+
+-axios
+-classnames
+-normalize.css
+-prop-types
+-react 
+-react-dom
+-react-scripts 
+
