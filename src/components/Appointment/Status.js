@@ -1,5 +1,5 @@
 import React from 'react';
-
+//Creates a status screen for scheduler
 export default function Status(props) {
   return (
     <main className="appointment__card appointment__card--status">

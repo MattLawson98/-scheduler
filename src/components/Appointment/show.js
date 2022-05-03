@@ -2,7 +2,7 @@
 import React from 'react';
 
 export default function Show(props) {
-
+  // Formats how and what is shown on the Scheduler page!
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">

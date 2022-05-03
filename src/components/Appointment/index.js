@@ -12,6 +12,7 @@ import Error from 'components/Appointment/Error';
 
 import 'components/Appointment/styles.scss';
 import useVisualMode from 'hooks/useVisualMode';
+
  const EMPTY = "EMPTY";
   const SHOW = "SHOW"; 
   const CREATE = "CREATE";
@@ -43,40 +44,45 @@ export default function Appointment(props) {
   function save(name, interviewer) {
     
     if (name && interviewer) {
-      transition(SAVING);
-
       const interview = {
         student: name,
         interviewer
       };
 
+      transition(SAVING);
+
       props.bookInterview(props.id, interview)
         .then(() => transition(SHOW))
-        .catch(() => transition(ERROR_SAVE, true))
+        .catch(() => { 
+          transition(ERROR_SAVE, true)
+        })
     }
   }
 
   function remove(){
-    transition(DELETING,true);
-    
-    props.cancelInterview(props.id)
-    .then(() => transition(EMPTY))
-    .catch(() => {
-      transition(ERROR_DELETE,true)
-
-     });
+    if (mode === CONFIRM) {
+      transition(DELETING,true);
+      
+      props.cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch(() => {
+        transition(ERROR_DELETE,true)
+      });
+    } else {
+      transition(CONFIRM);      
+    }
 
   }
 
   function edit() {
     transition(EDIT);
   }
-
+  //Gives the overall functionality/data of the scheduler app!
   return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-
+      {/* Adds the data for the main page showing interviews */}
       {mode === SHOW && (
       <Show
         student={props.interview.student}
@@ -84,7 +90,7 @@ export default function Appointment(props) {
         onDelete={remove}
         onEdit={edit}
       />)}
-
+      {/* Adds the data for the scheduling form */}
       {mode === CREATE && (
         <Form
         name={props.name}
@@ -93,22 +99,22 @@ export default function Appointment(props) {
         onSave={save}
         onCancel={back}
       />)}
-
+      {/* Adds the Saving message and function */}
       {mode === SAVING && 
         <Status message="Saving" 
       />}
-
+      {/* Adds the Deleting message and function */}
       {mode === DELETING && 
         <Status message="Deleting" 
       />}
-
+      {/* Adds the confimation message and function */}
       {mode === CONFIRM && 
         <Confirm 
           onCancel={back}
           onConfirm={remove}
           message="Are you sure you would like to delete?" 
       />}
-
+      {/* Adds the Editing functionality to the scheduler */}
       {mode === EDIT &&
         <Form 
           name={props.name ? props.name : props.interview.student}
@@ -117,16 +123,16 @@ export default function Appointment(props) {
           onSave={save}
           onCancel={back}
       />}
-
+      {/* Adds an Error on Save if encountered! */}
       {mode === ERROR_SAVE && (
         <Error
           message="Could not save appointment."
           onClose={back}
       />)}
-
+      {/* Adds an Error on Deleting if encountered */}
       {mode === ERROR_DELETE && (
         <Error
-          message="Could not cancel appointment."
+          message="Could not delete appointment."
           onClose={back}
       />)}
       

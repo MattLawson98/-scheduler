@@ -1,9 +1,8 @@
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import axios from "axios"; 
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import useApplicationData from "hooks/useApplicationData";
 
@@ -16,10 +15,11 @@ export default function Application(props) {
     bookInterview,
     cancelInterview
   } = useApplicationData();
-
+  //Gets the appoitments for the day
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+  //Gets the interviewers for the day
   const interviewers = getInterviewersForDay(state, state.day);
-
+  //Gets each individual appoitment and interview.
   const appointment = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview)
 
@@ -34,7 +34,7 @@ export default function Application(props) {
         cancelInterview={cancelInterview}
     />)
   });
-
+  //Creates the main scheduler page showing each day as well as each interview!
   return (
     <main className="layout">
       <section className="sidebar">
