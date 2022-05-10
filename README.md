@@ -13,6 +13,8 @@ Install dependencies with `npm install`.
 The database API that was used is found at https://github.com/lighthouse-labs/scheduler-api
 There is a set of instructions attached for set-up
 
+If using Vagrant or WSL use a 12.x.x version of node, If on an M1 machine use a node 15.x.x Version!
+
 ## Running Webpack Development Server
 
 ```sh
