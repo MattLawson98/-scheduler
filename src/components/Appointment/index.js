@@ -23,6 +23,7 @@ import useVisualMode from 'hooks/useVisualMode';
   const ERROR_DELETE = "ERROR_DELETE";
   const DELETING = "DELETING";
 
+//Creates page to show Appointment slots!
 export default function Appointment(props) {
 
   const { mode, transition, back } = useVisualMode(

@@ -5,6 +5,7 @@ export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
   
+  //Function for transitioning
   function transition(mode, replace = false) {
     if (replace) {
       setHistory(prev => prev.slice(0, -1));
@@ -14,7 +15,7 @@ export default function useVisualMode(initial) {
     }
     setMode(mode);
   }
-
+  //Function to go back a page
   function back() {
     if (history.length > 1) {
       setHistory(history.slice(0, -1));
